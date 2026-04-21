@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Home Broker Docs</title>
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
+    <style>
+        body { margin: 0; background: #fafafa; }
+        .header {
+            background: #1b1b1b; color: white; padding: 10px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: sans-serif;
+        }
+        select { padding: 5px; border-radius: 4px; cursor: pointer; }
+        .swagger-ui .topbar { display: none; }
+    </style>
+</head>
+<body>
+<div class="header">
+    <strong>HOME BROKER API</strong>
+    <select id="service-selector">
+        <option value="specs/auth.json">Auth Service</option>
+        <option value="specs/oms.json">OMS Service</option>
+        <option value="specs/portfolio.json">Portfolio Service</option>
+    </select>
+</div>
+
+<div id="swagger-ui"></div>
+
+<script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+<script>
+    const selector = document.getElementById('service-selector');
+
+    function renderApi(specPath) {
+        window.ui = SwaggerUIBundle({
+            url: specPath,
+            dom_id: '#swagger-ui',
+            deepLinking: true,
+            presets: [SwaggerUIBundle.presets.apis],
+            supportedSubmitMethods: []
+        });
+    }
+
+    selector.addEventListener('change', (e) => renderApi(e.target.value));
+
+    window.onload = () => renderApi(selector.value);
+</script>
+</body>
+</html>

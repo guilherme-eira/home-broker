@@ -1,0 +1,1447 @@
+{
+  "info": {
+    "_postman_id": "faba1260-d5c5-43ef-bf07-f197cfaeaa08",
+    "name": "Home Broker",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "42851883"
+  },
+  "item": [
+    {
+      "name": "Setup e Auth",
+      "item": [
+        {
+          "name": "POST Register (Investidor A)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    \r",
+                  "    pm.collectionVariables.set(\"id_investidor_a\", jsonData.id);\r",
+                  "    \r",
+                  "    console.log(\"Id do Investidor A atualizado!\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "super-secret-key",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"investidor_a\",\r\n  \"email\": \"investidor_a@exemplo.com\",\r\n  \"taxId\": \"260.094.290-48\",\r\n  \"password\": \"SenhaForte@123\",\r\n  \"firstName\": \"Investidor\",\r\n  \"lastName\": \"Alpha\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/hb-auth-service/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "hb-auth-service",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Register (Investidor B)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    \r",
+                  "    pm.collectionVariables.set(\"id_investidor_b\", jsonData.id);\r",
+                  "    \r",
+                  "    console.log(\"Id do Investidor B atualizado!\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "super-secret-key",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"investidor_b\",\r\n  \"email\": \"investidor_b@exemplo.com\",\r\n  \"taxId\": \"128.606.560-73\",\r\n  \"password\": \"SenhaForte@123\",\r\n  \"firstName\": \"Investidor\",\r\n  \"lastName\": \"Bravo\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/hb-auth-service/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "hb-auth-service",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Register (Investidor C)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    \r",
+                  "    pm.collectionVariables.set(\"id_investidor_c\", jsonData.id);\r",
+                  "    \r",
+                  "    console.log(\"Id do Investidor C atualizado!\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "super-secret-key",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"investidor_c\",\r\n  \"email\": \"investidor_c@exemplo.com\",\r\n  \"taxId\": \"221.186.200-47\",\r\n  \"password\": \"SenhaForte@123\",\r\n  \"firstName\": \"Investidor\",\r\n  \"lastName\": \"Charlie\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/hb-auth-service/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "hb-auth-service",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Login (Investidor A)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    \r",
+                  "    pm.collectionVariables.set(\"token_investidor_a\", jsonData.accessToken);\r",
+                  "    \r",
+                  "    console.log(\"Token do Investidor A atualizado!\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"investidor_a\",\r\n    \"password\": \"SenhaForte@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/hb-auth-service/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "hb-auth-service",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Login (Investidor B)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    \r",
+                  "    pm.collectionVariables.set(\"token_investidor_b\", jsonData.accessToken);\r",
+                  "    \r",
+                  "    console.log(\"Token do Investidor B atualizado!\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"investidor_b\",\r\n    \"password\": \"SenhaForte@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/hb-auth-service/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "hb-auth-service",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Login (Investidor C)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    \r",
+                  "    pm.collectionVariables.set(\"token_investidor_c\", jsonData.accessToken);\r",
+                  "    \r",
+                  "    console.log(\"Token do Investidor C atualizado!\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"investidor_c\",\r\n    \"password\": \"SenhaForte@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/hb-auth-service/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "hb-auth-service",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "**Descrição:**\n\nResponsável pelo gerenciamento de identidade e controle de acesso via **Keycloak**."
+    },
+    {
+      "name": "Portfolio (Provisionamento)",
+      "item": [
+        {
+          "name": "[A] Depósito Inicial (Cash)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "super-secret-key",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"investorId\": \"{{id_investidor_a}}\",\r\n  \"amount\": 100000.00\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/hb-portfolio-service/webhooks/deposits",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "hb-portfolio-service",
+                "webhooks",
+                "deposits"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[C] Depósito Inicial (Cash)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "super-secret-key",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"investorId\": \"{{id_investidor_c}}\",\r\n  \"amount\": 100000.00\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/hb-portfolio-service/webhooks/deposits",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "hb-portfolio-service",
+                "webhooks",
+                "deposits"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[B] Depósito Inicial (Assets)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "super-secret-key",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"investorId\": \"{{id_investidor_b}}\",\r\n  \"ticker\": \"PETR4\",\r\n  \"quantity\": 5000\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/hb-portfolio-service/webhooks/custody-transfer",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "hb-portfolio-service",
+                "webhooks",
+                "custody-transfer"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "**Descrição:**\n\nPonto de entrada para simulação de eventos financeiros externos (Webhooks) que alimentam a custódia dos investidores no **hb-portfolio-service.**"
+    },
+    {
+      "name": "Orders (Fluxo Principal)",
+      "item": [
+        {
+          "name": "Cenário 1 - Execução Total e Prioridade",
+          "item": [
+            {
+              "name": "[A] BID 100 PETR4 a 38.00",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 201) {\r",
+                      "    pm.collectionVariables.set(\"id_ordem1_a\", pm.response.json().orderId);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_a}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"ticker\": \"PETR4\",\r\n  \"totalQuantity\": 100,\r\n  \"priceLimit\": 38.00,\r\n  \"type\": \"LIMIT\",\r\n  \"side\": \"BID\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/hb-oms-service/orders",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-oms-service",
+                    "orders"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[C] BID 100 PETR4 a 38.10",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 201) {\r",
+                      "    pm.collectionVariables.set(\"id_ordem1_c\", pm.response.json().orderId);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_c}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"ticker\": \"PETR4\",\r\n  \"totalQuantity\": 100,\r\n  \"priceLimit\": 38.10,\r\n  \"type\": \"LIMIT\",\r\n  \"side\": \"BID\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/hb-oms-service/orders",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-oms-service",
+                    "orders"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[B] ASK 100 PETR4 a 38.10",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 201) {\r",
+                      "    pm.collectionVariables.set(\"id_ordem1_b\", pm.response.json().orderId);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_b}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"ticker\": \"PETR4\",\r\n  \"totalQuantity\": 100,\r\n  \"priceLimit\": 38.10,\r\n  \"type\": \"LIMIT\",\r\n  \"side\": \"ASK\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/hb-oms-service/orders",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-oms-service",
+                    "orders"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[C] Verificar Status da Ordem 1",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "setTimeout(() => {\r",
+                      "    console.log(\"Delay finalizado. Iniciando verificação...\");\r",
+                      "}, 10000);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_c}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "http://localhost:8081/hb-oms-service/orders/{{id_ordem1_c}}",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-oms-service",
+                    "orders",
+                    "{{id_ordem1_c}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[A] Verificar Status da Ordem 1",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_a}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "http://localhost:8081/hb-oms-service/orders/{{id_ordem1_a}}",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-oms-service",
+                    "orders",
+                    "{{id_ordem1_a}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[B] Verificar Saldo",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_b}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8081/hb-portfolio-service/wallets/me/resources",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-portfolio-service",
+                    "wallets",
+                    "me",
+                    "resources"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[C] Verificar Custódia",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_c}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8081/hb-portfolio-service/wallets/me/resources",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-portfolio-service",
+                    "wallets",
+                    "me",
+                    "resources"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "**Descrição do Cenário:**\n\nValida o algoritmo de **Price-Time Priority** (Prioridade de Preço e Tempo). O teste simula uma disputa no topo do livro para garantir que o motor de matching escolha sempre a melhor oferta para o contraparte.\n\n**Fluxo de Execução:**\n\n1. **Ordem 1 (A):** Estabelece um preço base de compra (ex: R$ 38,00).\n    \n2. **Ordem 2 (C):** Entra com um preço melhor (ex: R$ 38,10). Deve assumir a prioridade (topo).\n    \n3. **Ordem 3 (B):** Envia uma venda compatível com o melhor preço.\n    \n\n**Resultado Esperado:**\n\n- A ordem do **Investidor C** deve ser totalmente executada (`FILLED`).\n    \n- A ordem do **Investidor A** deve permanecer intacta no livro (`OPEN`).\n    \n- O saldo do vendedor (B) deve refletir o valor da execução com C"
+        },
+        {
+          "name": "Cenário 2 - Execução Parcial e Múltiplos Matches",
+          "item": [
+            {
+              "name": "[A] BID 200 PETR4 a 38.00",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 201) {\r",
+                      "    pm.collectionVariables.set(\"id_ordem2_a\", pm.response.json().orderId);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_a}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"ticker\": \"PETR4\",\r\n  \"totalQuantity\": 200,\r\n  \"priceLimit\": 38.00,\r\n  \"type\": \"LIMIT\",\r\n  \"side\": \"BID\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/hb-oms-service/orders",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-oms-service",
+                    "orders"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[B] ASK 200 PETR4 a 38.00",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 201) {\r",
+                      "    pm.collectionVariables.set(\"id_ordem2_b\", pm.response.json().orderId);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_b}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"ticker\": \"PETR4\",\r\n  \"totalQuantity\": 200,\r\n  \"priceLimit\": 38.00,\r\n  \"type\": \"LIMIT\",\r\n  \"side\": \"ASK\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/hb-oms-service/orders",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-oms-service",
+                    "orders"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[A] Verificar Status da Ordem 2",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "setTimeout(() => {\r",
+                      "    console.log(\"Delay finalizado. Iniciando verificação...\");\r",
+                      "}, 10000);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_a}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8081/hb-oms-service/orders/{{id_ordem2_a}}",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-oms-service",
+                    "orders",
+                    "{{id_ordem2_a}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[B] Verificar Saldo",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_b}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8081/hb-portfolio-service/wallets/me/resources",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-portfolio-service",
+                    "wallets",
+                    "me",
+                    "resources"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[A] Verificar Custódia",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_a}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8081/hb-portfolio-service/wallets/me/resources",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-portfolio-service",
+                    "wallets",
+                    "me",
+                    "resources"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "**Descrição do Cenário:**\n\nTesta a varredura de múltiplas ordens no mesmo nível de preço. O Investidor B envia uma venda que deve consumir totalmente a sobra do teste anterior e ainda abater parte de uma nova ordem de A, provando que o motor respeita a cronologia (FIFO) dentro do mesmo preço.\n\n**Fluxo de Execução:**\n\n1. **Estado Atual:** Resta a ordem **1.1 de A** (100 unidades a R$ 38,00).\n    \n2. **Ação 2.1 (A):** Envia uma nova ordem de 200 unidades a R$ 38,00.\n    \n    - _Livro:_ A tem agora duas ordens na fila do 38,00: a de 100 (antiga) e a de 200 (nova).\n        \n3. **Ação 2.2 (B):** Envia uma venda (ASK) de 200 unidades a R$ 38,00.\n    \n    - _Match:_ O motor deve limpar os 100 da ordem antiga e tirar 100 da ordem nova.\n        \n\n**Resultado Esperado:**\n\n- **Ordem 1.1 (A):** Status `FILLED` (zerada).\n    \n- **Ordem 2.1 (A):** Status `PARTIAL` (restam 100).\n    \n- **Ordem 2.2 (B):** Status `FILLED`."
+        },
+        {
+          "name": "Cenário 3 - Ordem a Mercado",
+          "item": [
+            {
+              "name": "[B] ASK 200 PETR4 MARKET",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 201) {\r",
+                      "    pm.collectionVariables.set(\"id_ordem3_b\", pm.response.json().orderId);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_b}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"ticker\": \"PETR4\",\r\n  \"totalQuantity\": 200,\r\n  \"type\": \"MARKET\",\r\n  \"side\": \"ASK\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/hb-oms-service/orders",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-oms-service",
+                    "orders"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[B] Verificar Status da Ordem 3",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "setTimeout(() => {\r",
+                      "    console.log(\"Delay finalizado. Iniciando verificação...\");\r",
+                      "}, 10000);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_b}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "http://localhost:8081/hb-oms-service/orders/{{id_ordem3_b}}",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-oms-service",
+                    "orders",
+                    "{{id_ordem3_b}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[B] Verificar Saldo",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_b}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8081/hb-portfolio-service/wallets/me/resources",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-portfolio-service",
+                    "wallets",
+                    "me",
+                    "resources"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "**Descrição do Cenário:**\n\nValida o processamento de uma **Ordem a Mercado (Market Order)** com liquidez insuficiente no livro. O objetivo é garantir que o motor execute o máximo possível contra as ordens limitadas existentes e expire o saldo restante imediatamente, sem permitir que a ordem a mercado entre no Order Book.\n\n**Fluxo de Execução:**\n\n1. **Estado Inicial:** Existe uma ordem remanescente de **A** no livro (100 unidades a R$ 38,00).\n    \n2. **Ação 3.1 (B):** Envia uma **Venda a Mercado (ASK MARKET)** de 200 unidades.\n    \n    - _Nota: A ordem vai ser enviada tomando o preço da última negociação (R$ 38,00_) como referência.\n        \n3. **Processamento:** O motor executa 100 unidades contra a ordem de **A**. As 100 unidades restantes da ordem de **B** não encontram contraparte e devem ser marcadas como `EXPIRED`.\n    \n\n**Resultado Esperado:**\n\n- **Ordem 2.1 (A):** Status muda para `FILLED` (100 unidades).\n    \n- **Ordem 3.1 (B):** Status final deve ser `EXPIRED`, com `filledQuantity: 100` e `remainingQuantity: 100`."
+        },
+        {
+          "name": "Cenário 4 - Cancelamento de Ordem",
+          "item": [
+            {
+              "name": "[C] BID 100 PETR4 a 38.00",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 201) {\r",
+                      "    pm.collectionVariables.set(\"id_ordem2_c\", pm.response.json().orderId);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_c}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"ticker\": \"PETR4\",\r\n  \"totalQuantity\": 100,\r\n  \"priceLimit\": 38.00,\r\n  \"type\": \"LIMIT\",\r\n  \"side\": \"BID\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/hb-oms-service/orders",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-oms-service",
+                    "orders"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[C] POST Cancelar Ordem",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_c}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"orderId\": \"{{id_ordem2_c}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/hb-oms-service/orders/cancel",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-oms-service",
+                    "orders",
+                    "cancel"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[C] Verifica Status da Ordem 2",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "setTimeout(() => {\r",
+                      "    console.log(\"Delay finalizado. Iniciando verificação...\");\r",
+                      "}, 10000);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_c}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/hb-oms-service/orders/{{id_ordem2_c}}",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-oms-service",
+                    "orders",
+                    "{{id_ordem2_c}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[C] Verifica Custódia",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token_investidor_c}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8081/hb-portfolio-service/wallets/me/resources",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "hb-portfolio-service",
+                    "wallets",
+                    "me",
+                    "resources"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "**Descrição do Cenário:**\n\nValida o ciclo de vida de uma ordem que é retirada do mercado pelo investidor antes de sofrer qualquer execução. O teste foca na integridade da transação: a ordem deve ser removida do Order Book, o status deve transitar para `CANCELLED` e o saldo bloqueado deve ser integralmente liberado.\n\n**Fluxo de Execução:**\n\n1. **Ação 4.1 (C):** Envia uma ordem de compra limitada (`LIMIT BID`) de 100 PETR4 a R$ 38,00. Como o livro está vazio, ela ficará aguardando contraparte.\n    \n2. **Ação 4.2 (C):** Envia uma solicitação de cancelamento referenciando o ID da ordem criada no passo anterior.\n    \n3. **Resultado Esperado:** A ordem deve ser marcada como `CANCELLED`. O saldo de R$ 3.800,00 que foi movido para `blockedBalance` deve retornar para o `availableBalance`."
+        }
+      ],
+      "description": "**Descrição:**\n\nEsta pasta contém fluxos de testes de ponta a ponta projetados para validar o **Matching Engine** e a consistência do **Order Book**.\n\n**Pré-requisitos:**\n\n- Investidores A, B e C registrados e autenticados.\n    \n- Saldo mestre provisionado via pasta `Portfolio (Provisionamento)`.\n    \n\n**Objetivo:** Garantir que as regras de negócio de prioridade, execução parcial e liquidação financeira estejam integradas corretamente entre o OMS, Portfolio e o Motor de Matching."
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "token_investidor_a",
+      "value": ""
+    },
+    {
+      "key": "token_investidor_b",
+      "value": ""
+    },
+    {
+      "key": "token_investidor_c",
+      "value": ""
+    },
+    {
+      "key": "id_investidor_a",
+      "value": ""
+    },
+    {
+      "key": "id_investidor_b",
+      "value": ""
+    },
+    {
+      "key": "id_investidor_c",
+      "value": ""
+    },
+    {
+      "key": "id_ordem1_a",
+      "value": ""
+    },
+    {
+      "key": "id_ordem1_c",
+      "value": ""
+    },
+    {
+      "key": "id_ordem1_b",
+      "value": ""
+    },
+    {
+      "key": "id_ordem2_a",
+      "value": ""
+    },
+    {
+      "key": "id_ordem2_b",
+      "value": ""
+    },
+    {
+      "key": "id_ordem3_b",
+      "value": ""
+    },
+    {
+      "key": "id_ordem2_c",
+      "value": ""
+    }
+  ]
+}

@@ -1,0 +1,205 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: ${RABBITMQ_HOST}
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
+    volumes:
+      - ./docker_data/rabbitmq:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - hb-network
+
+  matching-engine-redis:
+    image: redis:latest
+    container_name: ${ME_REDIS_HOST}
+    command: [ "redis-server", "--appendonly", "yes", "--appendfsync", "everysec" ]
+    volumes:
+      - ./docker_data/redis_me:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - hb-network
+
+  oms-redis:
+    image: redis:latest
+    container_name: ${OMS_REDIS_HOST}
+    volumes:
+      - ./docker_data/redis_oms:/data
+    ports:
+      - "6380:6379"
+    networks:
+      - hb-network
+
+  keycloak-mysql:
+    image: mysql:8.0
+    container_name: hb-keycloak-db
+    environment:
+      MYSQL_DATABASE: keycloak
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./docker_data/mysql_keycloak:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    networks:
+      - hb-network
+
+  portfolio-mysql:
+    image: mysql:8.0
+    container_name: ${PORTFOLIO_MYSQL_HOST}
+    environment:
+      MYSQL_DATABASE: ${PORTFOLIO_DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./docker_data/mysql_portfolio:/var/lib/mysql
+    ports:
+      - "3308:3306"
+    networks:
+      - hb-network
+
+  oms-mysql:
+    image: mysql:8.0
+    container_name: ${OMS_MYSQL_HOST}
+    environment:
+      MYSQL_DATABASE: ${OMS_DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./docker_data/mysql_oms:/var/lib/mysql
+    ports:
+      - "3309:3306"
+    networks:
+      - hb-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0
+    container_name: ${KEYCLOAK_SERVER}
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      KC_DB: mysql
+      KC_DB_URL: jdbc:mysql://hb-keycloak-db:3306/keycloak?useSSL=false&allowPublicKeyRetrieval=true
+      KC_DB_USERNAME: root
+      KC_DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./keycloak_config/realm-export.json:/opt/keycloak/data/import/realm.json
+    depends_on:
+      keycloak-mysql:
+        condition: service_healthy
+    networks:
+      - hb-network
+
+  discovery-server:
+    build: ./hb-discovery-server
+    container_name: ${EUREKA_SERVER}
+    ports:
+      - "8761:8761"
+    environment:
+      - EUREKA_SERVER=${EUREKA_SERVER}
+    networks:
+      - hb-network
+
+  api-gateway:
+    build: ./hb-api-gateway
+    container_name: hb-api-gateway
+    ports:
+      - "8081:8081"
+    environment:
+      - EUREKA_SERVER=${EUREKA_SERVER}
+      - KEYCLOAK_SERVER=${KEYCLOAK_SERVER}
+    depends_on:
+      - discovery-server
+      - keycloak
+    networks:
+      - hb-network
+
+  auth-service:
+    build: ./hb-auth-service
+    container_name: hb-auth-service
+    environment:
+      - EUREKA_SERVER=${EUREKA_SERVER}
+      - KEYCLOAK_SERVER=${KEYCLOAK_SERVER}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - AUTH_SERVICE_SECRET=${AUTH_SERVICE_SECRET}
+      - AUTH_API_KEY=${AUTH_API_KEY}
+    depends_on:
+      - discovery-server
+      - rabbitmq
+      - keycloak
+    networks:
+      - hb-network
+
+  oms-service:
+    build: ./hb-oms-service
+    container_name: hb-oms-service
+    environment:
+      - EUREKA_SERVER=${EUREKA_SERVER}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - OMS_MYSQL_HOST=${OMS_MYSQL_HOST}
+      - OMS_DB_NAME=${OMS_DB_NAME}
+      - OMS_REDIS_HOST=${OMS_REDIS_HOST}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - OMS_SERVICE_SECRET=${OMS_SERVICE_SECRET}
+      - KEYCLOAK_SERVER=${KEYCLOAK_SERVER}
+    depends_on:
+      - discovery-server
+      - oms-mysql
+      - oms-redis
+    networks:
+      - hb-network
+
+  portfolio-service:
+    build: ./hb-portfolio-service
+    container_name: hb-portfolio-service
+    environment:
+      - EUREKA_SERVER=${EUREKA_SERVER}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - PORTFOLIO_MYSQL_HOST=${PORTFOLIO_MYSQL_HOST}
+      - PORTFOLIO_DB_NAME=${PORTFOLIO_DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - KEYCLOAK_SERVER=${KEYCLOAK_SERVER}
+      - PORTFOLIO_API_KEY=${PORTFOLIO_API_KEY}
+    depends_on:
+      - discovery-server
+      - portfolio-mysql
+    networks:
+      - hb-network
+
+  matching-engine:
+    build: ./hb-matching-engine
+    container_name: hb-matching-engine
+    environment:
+      - EUREKA_SERVER=${EUREKA_SERVER}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - ME_REDIS_HOST=${ME_REDIS_HOST}
+    depends_on:
+      - discovery-server
+      - matching-engine-redis
+      - rabbitmq
+    networks:
+      - hb-network
+
+  api-docs:
+    image: nginx:stable-alpine
+    container_name: hb-api-docs
+    ports:
+      - "8089:80"
+    volumes:
+      - ./docs:/usr/share/nginx/html:ro
+    restart: always
+
+networks:
+  hb-network:
+    driver: bridge

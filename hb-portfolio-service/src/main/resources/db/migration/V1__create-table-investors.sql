@@ -1,0 +1,8 @@
+CREATE TABLE investors(
+    id BINARY(16) PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    tax_id VARCHAR(100) NOT NULL UNIQUE,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    created_at DATETIME(6) NOT NULL
+)

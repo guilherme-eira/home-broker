@@ -1,0 +1,474 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Home Broker - Portfolio Service",
+    "description": "Serviço de custódia, gestão de ativos e reserva de saldo.",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081/hb-portfolio-service",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Webhooks",
+      "description": "Endpoints de integração para entrada de recursos externos"
+    },
+    {
+      "name": "Wallet",
+      "description": "Gestão de recursos financeiro e custódia de ativos"
+    }
+  ],
+  "paths": {
+    "/webhooks/deposits": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Simular depósito financeiro",
+        "description": "Recebe uma notificação de depósito e credita o saldo na conta do investidor.",
+        "operationId": "handleDeposit",
+        "parameters": [
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "description": "Chave de API para autorizar o webhook",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepositRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Depósito processado com sucesso"
+          },
+          "400": {
+            "description": "Dados de entrada inválidos"
+          },
+          "401": {
+            "description": "X-API-KEY inválida ou ausente"
+          },
+          "404": {
+            "description": "Recurso não encontrado"
+          }
+        }
+      }
+    },
+    "/webhooks/custody-transfer": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Simular transferência de custódia",
+        "description": "Recebe uma notificação de transferência de ativos e adiciona as ações à carteira do investidor.",
+        "operationId": "handleCustodyTransfer",
+        "parameters": [
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "description": "Chave de API para autorizar o webhook",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustodyTransferRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Transferência processada com sucesso"
+          },
+          "400": {
+            "description": "Dados de entrada inválidos"
+          },
+          "401": {
+            "description": "X-API-KEY inválida ou ausente"
+          },
+          "404": {
+            "description": "Recurso não encontrado"
+          },
+          "422": {
+            "description": "Ativo inexistente"
+          }
+        }
+      }
+    },
+    "/wallets/reserve": {
+      "post": {
+        "tags": [
+          "Wallet"
+        ],
+        "summary": "Reservar recursos para ordem",
+        "description": "Bloqueia saldo ou ações para garantir a execução de uma nova ordem emitida pelo OMS.",
+        "operationId": "reserve",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReserveResourcesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Recurso reservado com sucesso"
+          },
+          "400": {
+            "description": "Dados de entrada inválidos (Bad Request)"
+          },
+          "401": {
+            "description": "Autenticação falhou (token inválido ou ausente)"
+          },
+          "403": {
+            "description": "Acesso negado (permissão insuficiente)"
+          },
+          "404": {
+            "description": "Recurso não encontrado"
+          },
+          "422": {
+            "description": "Saldo ou custódia insuficiente para realizar a reserva"
+          }
+        }
+      }
+    },
+    "/wallets/me/resources": {
+      "get": {
+        "tags": [
+          "Wallet"
+        ],
+        "summary": "Consultar recursos do investidor",
+        "description": "Retorna o saldo (disponível/bloqueado) e as posições em custódia do usuário logado via JWT.",
+        "operationId": "getResources",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página (0..N)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Quantidade de itens por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            },
+            "example": 10
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Campo para ordenação",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ticker"
+            },
+            "example": "ticker"
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "description": "Direção da ordenação",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "asc"
+            },
+            "example": "asc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recursos recuperados com sucesso",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourcesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token JWT ausente ou inválido",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourcesResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourcesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DepositRequest": {
+        "type": "object",
+        "description": "Solicitação de aporte financeiro (dinheiro) via depósito",
+        "properties": {
+          "investorId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID único do investidor no sistema",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Valor financeiro a ser depositado",
+            "example": 1500.5
+          }
+        },
+        "required": [
+          "amount",
+          "investorId"
+        ]
+      },
+      "CustodyTransferRequest": {
+        "type": "object",
+        "description": "Solicitação de aporte de ativos (ações) via custódia externa",
+        "properties": {
+          "investorId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID único do investidor no sistema",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "ticker": {
+            "type": "string",
+            "description": "Símbolo do ativo (Ticker)",
+            "example": "PETR4"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Quantidade de ações a serem adicionadas",
+            "example": 100
+          }
+        },
+        "required": [
+          "investorId",
+          "quantity",
+          "ticker"
+        ]
+      },
+      "ReserveResourcesRequest": {
+        "type": "object",
+        "description": "Solicitação de reserva de saldo ou ativos para execução de ordens",
+        "properties": {
+          "investorId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID do investidor proprietário do recurso",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "orderId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID da ordem gerada no OMS",
+            "example": "661f9511-f30c-52e5-b827-557766551111"
+          },
+          "side": {
+            "type": "string",
+            "description": "Lado da operação (BID para compra, ASK para venda)",
+            "enum": [
+              "BID",
+              "ASK"
+            ]
+          },
+          "ticker": {
+            "type": "string",
+            "description": "Ticker do ativo (obrigatório se type for ASK)",
+            "example": "PETR4"
+          },
+          "volume": {
+            "type": "number",
+            "description": "Quantidade ou valor financeiro a ser bloqueado",
+            "example": 1500
+          }
+        },
+        "required": [
+          "investorId",
+          "orderId",
+          "side",
+          "volume"
+        ]
+      },
+      "PagePositionResponseDTO": {
+        "type": "object",
+        "properties": {
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageable": {
+            "$ref": "#/components/schemas/PageableObject"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PositionResponseDTO"
+            }
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/SortObject"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PageableObject": {
+        "type": "object",
+        "properties": {
+          "unpaged": {
+            "type": "boolean"
+          },
+          "paged": {
+            "type": "boolean"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/SortObject"
+          }
+        }
+      },
+      "PositionResponseDTO": {
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "type": "string"
+          },
+          "availableQuantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "blockedQuantity": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ResourcesResponse": {
+        "type": "object",
+        "properties": {
+          "availableBalance": {
+            "type": "number"
+          },
+          "blockedBalance": {
+            "type": "number"
+          },
+          "positions": {
+            "$ref": "#/components/schemas/PagePositionResponseDTO"
+          }
+        }
+      },
+      "SortObject": {
+        "type": "object",
+        "properties": {
+          "unsorted": {
+            "type": "boolean"
+          },
+          "sorted": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "description": "Insira o token JWT obtido no Auth Service para acessar os endpoints de investidor.",
+        "name": "bearerAuth",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
